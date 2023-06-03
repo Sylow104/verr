@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 int levenshtein_dist(char *str, size_t str_len,
 	char *comp, size_t comp_len,
