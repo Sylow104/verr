@@ -2,8 +2,9 @@
 
 ## requirements
 
-- gcrypt
-- gsl
+- gcrypt-devel
+- gsl-devel
+- openblas-devel
 
 ## notes
 
