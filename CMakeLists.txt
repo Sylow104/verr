@@ -1,3 +1,3 @@
 cmake_minimum_required(VERSION 3.10)
 project("verr")
-add_subdirectory(tools)
+add_subdirectory(shared)
