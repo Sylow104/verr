@@ -10,9 +10,9 @@ int rand_init();
 bool rand_bool();
 
 unsigned int rand_i();
-unsigned float rand_f();
-unsigned double rand_d();
+float rand_f();
+double rand_d();
 
 unsigned int rand_i_b(unsigned int max);
-unsigned float rand_f_b(unsigned float max);
-unsigned double rand_d_b(unsigned double max);
+float rand_f_b(float max);
+double rand_d_b(double max);
