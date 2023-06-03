@@ -1,4 +1,4 @@
-#include "bcrypt.h"
+#include "tools/bcrypt.h"
 #include <crypt.h>
 
 char *bcrypt(const char *phrase, const char *salt)

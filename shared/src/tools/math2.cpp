@@ -1,4 +1,4 @@
-#include "math2.h"
+#include "tools/math2.h"
 
 template<typename T> T clamp(T min, T max, T val)
 {

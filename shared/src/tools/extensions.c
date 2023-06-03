@@ -1,4 +1,4 @@
-#include "extensions.h"
+#include "tools/extensions.h"
 
 int levenshtein_dist(char *str, size_t str_len,
 	char *comp, size_t comp_len,
