@@ -1,21 +1,24 @@
 #include "network/packet.h"
+#include <stdlib.h>
+
+#define DEFAULT_BASE_SIZE 1024
 
 struct packet_element_u
 {
-	enum packet_element_e type;
+	uint8_t type;
 	union
 	{
 		struct
 		{
-			size_t len;
-			char b;
+			uint32_t len;
+			uint8_t b;
 		} binstr;
 		union
 		{
-			char c;
-			short s;
-			int i;
-			double d;
+			uint8_t c;
+			uint16_t s;
+			uint32_t i;
+			uint64_t d;
 		} num;
 	};
 };
@@ -25,31 +28,113 @@ struct packet_element_u
 // int body_len + 4
 // int num + 4
 
-struct
+struct _packet_u
 {
-	size_t length;
-	size_t num;
-} packet_body_u;
+	uint32_t op;
+	uint64_t id;
+	uint32_t body_len;
+	uint32_t num_ele;
+	uint8_t start;
+};
 
-struct
+struct packet_u
 {
-	int op;
-	long id;
+	struct _packet_u *m;
+	struct packet_element_u *cur;
+};
 
-} packet_header_u;
-
-struct
+struct packet_u *packet_new(uint32_t op, uint64_t id, size_t block_n)
 {
-	char *_buffer;
-	struct packet_header_u *header;
-} packet_u;
+	size_t packet_size;
+	struct packet_u *to_ret;
 
-struct packet_u *packet_new(int op, long id, int block_n)
-{
-	return 0x0;
+	if (!op || !id || (block_n < 0)) {
+		return 0x0;
+	}
+
+	if (block_n) {
+		packet_size = block_n * DEFAULT_BASE_SIZE;
+	}
+	else {
+		packet_size = 1 * DEFAULT_BASE_SIZE;
+	}
+
+	to_ret =
+	    (struct packet_u *)malloc(sizeof(struct packet_u));
+	if (!to_ret) {
+		return 0x0;
+	}
+
+	to_ret->m =
+	    (struct _packet_u *)malloc(packet_size);
+
+	to_ret->m->op = op;
+	to_ret->m->id = id;
+	to_ret->m->body_len = 0;
+	to_ret->m->num_ele = 0;
+
+	to_ret->cur = (struct packet_element_u *)&to_ret->m->start;
+	to_ret->cur->type = NONE;
+
+	return to_ret;
 }
 
 int packet_destroy(struct packet_u *to_destroy)
 {
+	if (!to_destroy) {
+		return -1;
+	}
+
+	free(to_destroy->m);
+	free(to_destroy);
 	return 0;
 }
+
+enum packet_element_e packet_cur_type(struct packet_u *cur)
+{
+	return cur->cur->type;
+}
+
+size_t packet_cur_size(struct packet_u *cur)
+{
+	size_t to_ret = sizeof(uint8_t);
+	switch (packet_cur_type(cur)) {
+		case BYTE:
+			to_ret += sizeof(uint8_t);
+			break;
+		case SHORT:
+			to_ret += sizeof(uint16_t);
+			break;
+		case INT:
+			to_ret += sizeof(uint32_t);
+			break;
+		case LONG:
+			to_ret += sizeof(uint64_t);
+			break;
+		case FLOAT:
+			to_ret += sizeof(float);
+			break;
+		case STRING:
+		case BIN:
+			to_ret += sizeof(uint32_t);
+			to_ret += cur->cur->binstr.len;
+			break;
+		default:
+			return NONE;
+	}
+	return to_ret;
+}
+
+enum packet_element_e packet_next(struct packet_u *to_mod)
+{
+	if (!to_mod) {
+		return NONE;
+	}
+
+	size_t jump_size = packet_cur_size(to_mod);
+	to_mod->cur = (struct packet_element_u *)
+		((char *)to_mod->cur + jump_size);
+	
+	return (packet_cur_type(to_mod));
+}
+

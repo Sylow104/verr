@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <stddef.h>
 
 enum packet_element_e
 {
@@ -13,7 +14,9 @@ enum packet_element_e
 	BIN
 };
 
-struct packet_u *packet_new(int op, long id, int block_n);
+struct packet_u;
+
+struct packet_u *packet_new(uint32_t op, uint64_t id, size_t block_n);
 int packet_destroy(struct packet_u *to_destroy);
 
 int packet_add_c(struct packet_u *to_add, char *c);
