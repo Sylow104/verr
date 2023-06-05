@@ -1,6 +1,7 @@
 #pragma once
 #include "network/packet.hpp"
 
+// TODO add client to marshal packets received from sockets
 class packet_i_u : public packet_u
 {
 	public:
