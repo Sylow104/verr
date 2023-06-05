@@ -136,6 +136,13 @@ enum packet_element_e packet_next(struct packet_u *to_mod)
 	return (packet_cur_type(to_mod));
 }
 
+template<typename T> int packet_add_num(struct packet_u *to_mod,
+	enum packet_element_e, T* val, size_t len)
+{
+	
+	return 0;
+}
+
 int packet_add(struct packet_u *to_mod, 
 	enum packet_element_e type, void *val, size_t len)
 {
@@ -164,3 +171,9 @@ int packet_add(struct packet_u *to_mod,
 	return 0;
 }
 
+int packet_add_c(struct packet_u *to_add, char *c)
+{
+	return packet_add(to_add, BYTE, c, sizeof(char));
+}
+
+int packet_add_s(struct packet_u *to_add, short
