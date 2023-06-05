@@ -56,3 +56,29 @@ buff_element_e buff_element_u::type()
 {
 	return (buff_element_e) _type;
 }
+
+const void *buff_element_u::val(size_t *len)
+{
+	if (len) {
+		*len = size();
+	} else {
+		;
+	}
+
+	void *target;
+
+	switch (type()) {
+		case BIN:
+		case STRING:
+			target = &binstr.b;
+			break;
+		case NONE:
+			target = 0x0;
+			break;
+		default:
+			target = &b;
+			break;
+	}
+
+	return (const void *) target;
+}

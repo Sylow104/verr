@@ -11,8 +11,9 @@ class packet_u
 	packet_u();
 	~packet_u();
 
-	protected:
 	size_t next();
+
+	protected:
 	buff_u *buffer;
 	buff_element_u *cur;
 	size_t body_position;

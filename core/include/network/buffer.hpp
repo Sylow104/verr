@@ -24,6 +24,7 @@ class buff_element_u
 	size_t mod(buff_element_e type, const void *src, size_t len);
 	size_t size();
 	buff_element_e type();
+	const void *val(size_t *len);
 
 	private:
 	uint8_t _type;
