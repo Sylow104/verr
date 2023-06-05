@@ -14,6 +14,42 @@ enum packet_element_e
 	BIN
 };
 
+struct packet_buffer_u;
+struct packet_element_u;
+
+class packet_c
+{
+	public:
+	packet_c(uint32_t op, uint64_t id, size_t block_n);
+	packet_c(uint32_t op, uint64_t id);
+	~packet_c();
+
+	template<typename T> int add_simple(enum packet_element_e type, 
+		T to_add)
+	{
+		return add(type, &to_add, sizeof(T));
+	};
+
+	int add_binstr(enum packet_element_e type,
+		void *to_add, size_t len)
+	{
+		return add(type, to_add, len);
+	};
+	int add_leb128(enum packet_element_e type, 
+		void *to_add, size_t len);
+
+	protected:
+
+	private:
+	int add(enum packet_element_e type, void *addr, size_t len);
+	enum packet_element_e next();
+	enum packet_element_e type();
+
+	struct packet_buffer_u *buffer;
+	struct packet_element_u *cur;
+};
+
+/*
 struct packet_u;
 
 struct packet_u *packet_new(uint32_t op, uint64_t id, size_t block_n);
@@ -36,3 +72,4 @@ double *packet_val_d(struct packet_u *cur);
 void *packet_val_bin(struct packet_u *cur, size_t *size_ret);
 char *packet_val_str(struct packet_u *cur, size_t *size_ret);
 enum packet_element_e packet_next(struct packet_u *cur);
+*/
