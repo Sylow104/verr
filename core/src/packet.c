@@ -1,5 +1,6 @@
 #include "network/packet.h"
 #include <stdlib.h>
+#include <string.h>
 
 #define DEFAULT_BASE_SIZE 1024
 
@@ -15,10 +16,7 @@ struct packet_element_u
 		} binstr;
 		union
 		{
-			uint8_t c;
-			uint16_t s;
-			uint32_t i;
-			uint64_t d;
+			uint8_t b;
 		} num;
 	};
 };
@@ -136,5 +134,33 @@ enum packet_element_e packet_next(struct packet_u *to_mod)
 		((char *)to_mod->cur + jump_size);
 	
 	return (packet_cur_type(to_mod));
+}
+
+int packet_add(struct packet_u *to_mod, 
+	enum packet_element_e type, void *val, size_t len)
+{
+	void *target;
+	if (!type || !val || !len) {
+		return -1;
+	}
+
+	to_mod->cur->type = type;
+	switch (type) {
+		case BIN:
+		case STRING:
+			to_mod->cur->binstr.len = len;
+			target = &to_mod->cur->binstr.b;
+			break;
+		case NONE:
+			return -2;
+		default:
+			target = &to_mod->cur->num.b;
+			break;
+	}
+	memcpy(target, val, len);
+
+	packet_next(to_mod);
+	to_mod->cur->type = NONE;
+	return 0;
 }
 
