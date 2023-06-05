@@ -1,7 +1,7 @@
 #include "network/buffer.hpp"
 #include <string.h>
 
-size_t buff_element_u::mod(buff_element_e type, void *src, size_t len)
+size_t buff_element_u::mod(buff_element_e type, const void *src, size_t len)
 {
 	void *target;
 	this->_type = type;

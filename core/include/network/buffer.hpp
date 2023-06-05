@@ -21,7 +21,7 @@ enum buff_element_e
 class buff_element_u
 {
 	public:
-	size_t mod(buff_element_e type, void *src, size_t len);
+	size_t mod(buff_element_e type, const void *src, size_t len);
 	size_t size();
 	buff_element_e type();
 
