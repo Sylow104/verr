@@ -1,5 +1,7 @@
 # verr
 
+[![C/C++ CI](https://github.com/Sylow104/verr/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/Sylow104/verr/actions/workflows/c-cpp.yml)
+
 ## requirements
 
 - cmake
