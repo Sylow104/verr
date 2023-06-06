@@ -8,3 +8,4 @@ build/**
 !LICENSE
 !README.md
 !.gitignore
+!.github/workflows/c-cpp.yml
