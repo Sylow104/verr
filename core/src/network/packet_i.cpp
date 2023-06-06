@@ -66,6 +66,10 @@ template<typename T> const T *packet_i_u::val(size_t *len, bool to_next)
 	switch (cur->type()) {
 		case BIN:
 		case STRING:
+			if (*len <= 0) {
+				throw -2;
+			}
+			break;
 		case NONE:
 			break;
 		default:
