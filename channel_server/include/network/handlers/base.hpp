@@ -17,5 +17,7 @@ class base_h : protected handler_u
 	private:
 	bool check_inner_security_exception(channel_client_u *client, 
 		std::exception *except);
+	void handle_security_exception(channel_client_u *client,
+		std::exception *except);
 
 };
