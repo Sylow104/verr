@@ -9,14 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: fedora
 
     steps:
       - uses: actions/checkout@v3
       - name: prereqs_1
         run: docker pull slothai/openblas
-      - name: prereqs_2
-        run: docker pull kitware/cmake
       - name: configure
         run: cmake ./
       - name: make
