@@ -9,3 +9,13 @@ channel_client_u::~channel_client_u()
 {
 	;
 }
+
+dummy_client_u::dummy_client_u()
+{
+	;
+}
+
+dummy_client_u::~dummy_client_u()
+{
+	;
+}
