@@ -2,6 +2,8 @@
 
 [![C/C++ CI](https://github.com/Sylow104/verr/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/Sylow104/verr/actions/workflows/c-cpp.yml)
 
+[![CMake](https://github.com/Sylow104/verr/actions/workflows/cmake.yml/badge.svg)](https://github.com/Sylow104/verr/actions/workflows/cmake.yml)
+
 ## requirements
 
 - cmake
