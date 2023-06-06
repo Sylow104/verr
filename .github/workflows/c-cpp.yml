@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: prereqs_1
-        run: apt-get install -y libatlas-base-dev
+        run: sudo apt-get install -y libatlas-base-dev
       - name: configure
         run: cmake ./
       - name: make
