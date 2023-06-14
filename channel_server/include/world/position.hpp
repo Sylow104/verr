@@ -28,6 +28,8 @@ class position_u
 	bool operator!=(position_u *other);
 	const char *to_string();
 
+	static position_u *zero();
+
 	protected:
 
 	private:
